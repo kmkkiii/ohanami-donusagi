@@ -15,7 +15,7 @@ import './App.css';
 // モデルとSpeechBubbleを分離してmemoで最適化
 const DonusagiModelMemo = memo(function DonusagiModel() {
   const { scene } = useGLTF('/models/tripo_donusagi.glb');
-  return <primitive object={scene} scale={1} position={[0, -1, 0]} />;
+  return <primitive object={scene} scale={1} position={[9, -6.5, 0]} />;
 });
 
 // SpeechBubbleをメモ化して再レンダリングを最適化
@@ -47,7 +47,6 @@ function App() {
     'お花見ってのは最高だよな、まったく！',
     '春が来たな！待ちくたびれたぜ',
     '桜の季節は短いから楽しまないと損だぞ！',
-    'おい 一緒にお花見できて悪くないな',
     'お団子食いてぇな。腹減ったぜ！',
     '花びらが風に舞ってる。これぞ春って奴だな！',
     'おうよ！花見酒でも飲むか？',
@@ -77,7 +76,7 @@ function App() {
         <h1>どんうさぎとお花見</h1>
         <p>マウスでドラッグして回転 | スクロールでズーム</p>
       </div>
-      <Canvas camera={{ position: [5, 5, 5], fov: 50 }}>
+      <Canvas camera={{ position: [20, -2, -30], fov: 25 }}>
         <color attach="background" args={['#f0f0f0']} />
         <ambientLight intensity={0.5} />
         <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />

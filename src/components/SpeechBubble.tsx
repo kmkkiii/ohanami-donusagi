@@ -26,7 +26,7 @@ export function SpeechBubble({ message }: SpeechBubbleProps) {
   if (!visible || !displayMessage) return null;
 
   return (
-    <group position={[0, 7.0, 0]}>
+    <group position={[9, 1.5, 0]}>
       {' '}
       {/* 高さを少し下げる: 8.0 → 7.0 */}
       <Billboard follow={true} lockX={false} lockY={false} lockZ={false}>
