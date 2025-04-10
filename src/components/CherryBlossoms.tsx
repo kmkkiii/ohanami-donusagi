@@ -4,23 +4,21 @@ import * as THREE from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
 
 // 花びらの数を多めに設定
-const PETAL_COUNT = 300;
+const PETAL_COUNT = 500;
 // アニメーションエリアの範囲を広く
-const AREA_SIZE = 30;
+const AREA_SIZE = 100;
 
 export function CherryBlossoms() {
   const meshRef = useRef<THREE.InstancedMesh | null>(null);
   const [positions, rotations, speeds] = useMemo(() => {
-    const pos = new Array(PETAL_COUNT)
-      .fill(0)
-      .map(
-        () =>
-          new THREE.Vector3(
-            Math.random() * AREA_SIZE - AREA_SIZE / 2,
-            Math.random() * AREA_SIZE + AREA_SIZE / 2,
-            Math.random() * AREA_SIZE - AREA_SIZE / 2
-          )
-      );
+    const pos = new Array(PETAL_COUNT).fill(0).map(
+      () =>
+        new THREE.Vector3(
+          Math.random() * AREA_SIZE - AREA_SIZE / 2,
+          Math.random() * AREA_SIZE * 0.5 + AREA_SIZE * 0.2, // 落下開始点を少し上げる
+          Math.random() * AREA_SIZE - AREA_SIZE / 2
+        )
+    );
     const rot = new Array(PETAL_COUNT)
       .fill(0)
       .map(
