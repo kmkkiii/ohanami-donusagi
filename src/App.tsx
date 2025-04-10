@@ -1,4 +1,4 @@
-import { Suspense, useState, memo } from 'react';
+import { Suspense, useState, memo, useTransition } from 'react';
 import { Canvas } from '@react-three/fiber';
 import {
   OrbitControls,
@@ -18,10 +18,14 @@ const DonusagiModelMemo = memo(function DonusagiModel() {
   return <primitive object={scene} scale={1} position={[0, -1, 0]} />;
 });
 
-// SpeechBubbleを独立したコンポーネントとして定義
-function MessageBubble({ message }: { message: string }) {
+// SpeechBubbleをメモ化して再レンダリングを最適化
+const MessageBubbleMemo = memo(function MessageBubble({
+  message,
+}: {
+  message: string;
+}) {
   return <SpeechBubble message={message} />;
-}
+});
 
 function App() {
   // メッセージとタイムスタンプを組み合わせて状態を管理
@@ -32,6 +36,9 @@ function App() {
     text: '',
     timestamp: 0,
   });
+
+  // useTransitionを使って状態更新を優先度の低い更新として扱う
+  const [, startTransition] = useTransition();
 
   // どんうさぎの返答バリエーション
   const responses = [
@@ -54,10 +61,13 @@ function App() {
     const randomResponse =
       responses[Math.floor(Math.random() * responses.length)];
 
-    // タイムスタンプを更新してコンポーネントを確実に再レンダリング
-    setMessageState({
-      text: randomResponse,
-      timestamp: Date.now(),
+    // 状態更新を優先度の低い更新として扱うことで、
+    // メイン処理の中断を避ける
+    startTransition(() => {
+      setMessageState({
+        text: randomResponse,
+        timestamp: Date.now(),
+      });
     });
   };
 
@@ -73,14 +83,21 @@ function App() {
         <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
         <pointLight position={[-10, -10, -10]} />
 
-        <Suspense fallback={null}>
-          <group>
+        {/* 3Dモデルと吹き出しを別々のSuspenseでラップして再レンダリングの影響を分離 */}
+        <group>
+          <Suspense fallback={null}>
             <DonusagiModelMemo />
-            <MessageBubble
+          </Suspense>
+
+          <Suspense fallback={null}>
+            <MessageBubbleMemo
               message={messageState.text}
               key={messageState.timestamp}
             />
-          </group>
+          </Suspense>
+        </group>
+
+        <Suspense fallback={null}>
           <Environment preset="city" />
           <CherryBlossoms />
         </Suspense>
