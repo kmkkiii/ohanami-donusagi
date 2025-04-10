@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import '../styles/ChatInput.css';
 
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
@@ -22,8 +23,11 @@ export function ChatInput({ onSendMessage }: ChatInputProps) {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder="どんうさぎに話しかける..."
+        className="chat-input-field"
       />
-      <button type="submit">送信</button>
+      <button type="submit" className="chat-submit-button">
+        送信
+      </button>
     </form>
   );
 }

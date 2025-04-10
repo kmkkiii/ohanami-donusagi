@@ -1,0 +1,44 @@
+.chat-input {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.chat-input-field {
+  flex: 1;
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: 2px solid #e0e0e0; /* グレーのボーダー */
+  background-color: #ffffff; /* 白色の背景 */
+  color: #333333; /* 文字色を明示的に指定 */
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.chat-input-field:focus {
+  border-color: #029aaa;
+}
+
+/* 優先度を上げるためにボタンのセレクタを強化 */
+.chat-input .chat-submit-button {
+  background-color: #029aaa !important; /* important を追加 */
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.chat-input .chat-submit-button:hover {
+  background-color: #027a86 !important; /* important を追加 */
+}
+
+.chat-submit-button:active {
+  transform: scale(0.98);
+}
