@@ -30,8 +30,8 @@ export function SpeechBubble({ message }: SpeechBubbleProps) {
       {' '}
       {/* 高さを少し下げる: 8.0 → 7.0 */}
       <Billboard follow={true} lockX={false} lockY={false} lockZ={false}>
-        {/* 角丸の吹き出し - サイズを大きく */}
-        <RoundedBox args={[3.0, 1.1, 0.1]} radius={0.2} smoothness={4}>
+        {/* 角丸の吹き出し - さらに幅を拡大 */}
+        <RoundedBox args={[8.0, 1.1, 0.1]} radius={0.2} smoothness={4}>
           <meshBasicMaterial
             color="white"
             opacity={0.9}
@@ -46,14 +46,14 @@ export function SpeechBubble({ message }: SpeechBubbleProps) {
           <meshBasicMaterial color="white" opacity={0.9} transparent />
         </mesh>
 
-        {/* テキスト - サイズを大きく */}
+        {/* テキスト - 最大幅もさらに拡大 */}
         <Text
           position={[0, 0, 0.06]}
           fontSize={0.32} /* 文字サイズを大きく: 0.22 → 0.32 */
           color="black"
           anchorX="center"
           anchorY="middle"
-          maxWidth={2.7} /* 最大幅も調整: 2.2 → 2.7 */
+          maxWidth={4.6} /* 最大幅も調整: 2.2 → 4.6 */
           textAlign="center"
         >
           {displayMessage}
