@@ -1,0 +1,7 @@
+# Cloudflare Pages設定ファイル
+
+# ビルド設定
+[build]
+command = "npm run build"
+publish = "dist"
+node_compatibility_date = "2024-04-11"
