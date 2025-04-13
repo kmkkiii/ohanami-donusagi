@@ -77,8 +77,9 @@ export function CherryBlossoms() {
       pos.z += Math.cos(Date.now() * 0.001 + i) * 0.01;
 
       // 画面外に出たら上部にリセット
-      if (pos.y < -AREA_SIZE / 2) {
-        pos.y = AREA_SIZE + AREA_SIZE / 2;
+      if (pos.y < 0) {
+        // 地面に触れたらリセット
+        pos.y = AREA_SIZE * 0.4;
         pos.x = Math.random() * AREA_SIZE - AREA_SIZE / 2;
         pos.z = Math.random() * AREA_SIZE - AREA_SIZE / 2;
       }

@@ -8,6 +8,7 @@ import {
   GizmoViewport,
 } from '@react-three/drei';
 import { CherryBlossoms } from './components/CherryBlossoms';
+import { CherryTrees } from './components/CherryTrees';
 import { ChatInput } from './components/ChatInput';
 import { SpeechBubble } from './components/SpeechBubble';
 import './App.css';
@@ -15,7 +16,7 @@ import './App.css';
 // モデルとSpeechBubbleを分離してmemoで最適化
 const DonusagiModelMemo = memo(function DonusagiModel() {
   const { scene } = useGLTF('/models/tripo_donusagi.glb');
-  return <primitive object={scene} scale={1} position={[9, -6.5, 0]} />;
+  return <primitive object={scene} scale={1} position={[9, 0, 0]} />;
 });
 
 // SpeechBubbleをメモ化して再レンダリングを最適化
@@ -77,11 +78,6 @@ function App() {
         <p>マウスでドラッグして回転 | スクロールでズーム</p>
       </div>
       <Canvas camera={{ position: [20, -2, -30], fov: 25 }}>
-        <color attach="background" args={['#f0f0f0']} />
-        <ambientLight intensity={0.5} />
-        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-        <pointLight position={[-10, -10, -10]} />
-
         {/* 3Dモデルと吹き出しを別々のSuspenseでラップして再レンダリングの影響を分離 */}
         <group>
           <Suspense fallback={null}>
@@ -97,11 +93,18 @@ function App() {
         </group>
 
         <Suspense fallback={null}>
-          <Environment preset="city" />
+          <Environment
+            preset="park"
+            ground={{
+              height: 15,
+              radius: 60,
+            }}
+          />
           <CherryBlossoms />
+          <CherryTrees />
         </Suspense>
 
-        <OrbitControls />
+        <OrbitControls target={[-7, 16.5, 40]} />
         <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
           <GizmoViewport />
         </GizmoHelper>
