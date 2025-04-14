@@ -26,7 +26,7 @@ export function SpeechBubble({ message }: SpeechBubbleProps) {
   if (!visible || !displayMessage) return null;
 
   return (
-    <group position={[9, 1.5, 0]}>
+    <group position={[0, 8, 0]}>
       <Billboard follow={true} lockX={false} lockY={false} lockZ={false}>
         {/* 角丸の吹き出し */}
         <RoundedBox args={[8.0, 1.1, 0.1]} radius={0.2} smoothness={4}>
