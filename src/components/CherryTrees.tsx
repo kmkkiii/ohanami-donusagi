@@ -1,32 +1,35 @@
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useMemo } from 'react';
 import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 
-// 桜の木のポジション配列 - 木の数を10本に増やし、より中央寄りに配置
+// 桜の木のポジション配列 - 木の数を10本に増やし、中央寄りに配置
 const TREE_POSITIONS = [
-  // 中央寄りに配置し、groundの範囲内（半径60）に収まるように調整
-  [25, 13, 20], // どんうさぎの右側
-  [-25, 13, 20], // どんうさぎの左側
-  [20, 13, -25], // どんうさぎの後ろ右
-  [-20, 13, -25], // どんうさぎの後ろ左
-  [0, 13, -30], // どんうさぎの真後ろ
-
-  [30, 13, -5], // 右側
-  [-30, 13, -5], // 左側
-  [15, 13, 30], // 手前右
-  [-15, 13, 30], // 手前左
-  [0, 13, 35], // 真正面
+  [40, 13, 25], // どんうさぎの右側
+  [-30, 13, 30], // どんうさぎの左側
+  [25, 13, -35], // どんうさぎの後ろ右
+  [-25, 13, -30], // どんうさぎの後ろ左
+  [0, 13, -40], // どんうさぎの真後ろ
+  [45, 13, -10], // 右側
+  [-40, 13, -15], // 左側
+  [20, 13, 40], // 手前右
+  [-20, 13, 35], // 手前左
+  [0, 13, 45], // 真正面
 ];
 
-// 各木のスケールとY軸回転をランダム化するための関数
-// スケールをさらに2倍に増加（約24〜30倍）
-const getRandomScale = () => 24 + Math.random() * 6; // 基本値24〜30の範囲
-const getRandomRotation = () => Math.random() * Math.PI * 2;
+// スケールを固定値に設定
+const TREE_SCALE = 27; // 固定値に変更
 
 // メモ化された桜の木コンポーネント
 export const CherryTrees = memo(function CherryTrees() {
   // モデルをロード
   const { scene } = useGLTF('/models/tripo_cherry_blossom.glb');
+
+  // 各木の回転のみ初回レンダリング時に計算し、スケールは固定
+  const treesData = useMemo(() => {
+    return TREE_POSITIONS.map(() => ({
+      rotation: Math.random() * Math.PI * 2, // Y軸回転をランダム化
+    }));
+  }, []); // 空の依存配列で初回レンダリング時にのみ計算
 
   useEffect(() => {
     // モデルマテリアルの設定があれば行う
@@ -46,8 +49,8 @@ export const CherryTrees = memo(function CherryTrees() {
           key={index}
           object={scene.clone()}
           position={position}
-          rotation={[0, getRandomRotation(), 0]}
-          scale={getRandomScale()}
+          rotation={[0, treesData[index].rotation, 0]}
+          scale={TREE_SCALE}
         />
       ))}
     </group>

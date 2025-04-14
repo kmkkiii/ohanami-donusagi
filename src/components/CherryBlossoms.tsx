@@ -4,9 +4,9 @@ import * as THREE from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
 
 // 花びらの数を多めに設定
-const PETAL_COUNT = 750;
+const PETAL_COUNT = 800;
 // アニメーションエリアの範囲を広く
-const AREA_SIZE = 150;
+const AREA_SIZE = 100;
 
 export function CherryBlossoms() {
   const meshRef = useRef<THREE.InstancedMesh | null>(null);
